@@ -1,4 +1,5 @@
 # PipeNetwork-crm
-This is a project realized in ReactJS, Java and C-Sharp.
+This is a CRM application only admin side realized in ReactJS, Java and C-Sharp.
 
-This is a CRM application only admin side
+API are realized in using Java and ASP.NET Web API
+The front end is realized using React with Material UI
