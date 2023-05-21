@@ -20,11 +20,14 @@ export const Login = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark: boolean = colorMode === "dark";
 
+  // indica se la pagina sta eseguendo una chiamata API e quindi blocca l'azione di mandare ulteriori richieste
   const [loading, setLoading] = useState<boolean>(false);
 
+  // toggle per mostrare o no la password
   const [show, setShow] = useState<boolean>(false);
   const handleShowPwd = () => setShow(!show);
 
+  // dati email e password vengono salvati in degli state
   const [email, setEmail] = useState<string>();
   const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
