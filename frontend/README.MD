@@ -54,13 +54,14 @@ Sia login che signup non richiedono l'utilizzo del jwt token perché sono due ap
 
 ## autenticazione con jwt token
 
-prima di tutto installiamo il pacchetto nel nuget package manager
+Grazie a questo abbiamo le api con una sicurezza maggiore, perché non si possono richiamare senza aver effettuato un login almeno
 
 ### cose che potrei aggiungere in futuro
 
 - sistemare possibilità di overposting delle POST E PUT dei controllers
 - rendere email uniche nel db (forse non ha senso perché se uno si elimina ma poi si riregistra deve poterlo fare)
-- mettere il fatto che la email sia settata to lowercase nel BE, perché la email non è case sensitive
+- si può mettere una gestione utilizzando i ruoli ma non è messa di base
+- si possono mettere i token con un expiring, di base non so se ci sono
 
 ## NOTE IMPORTANTI segnati questo account per entrare
 

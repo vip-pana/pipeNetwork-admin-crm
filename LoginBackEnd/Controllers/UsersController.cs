@@ -29,12 +29,9 @@ namespace LoginBackEnd.Controllers
 
         // GET: api/Users
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
             return await _context.Users.ToListAsync();
         }
 
@@ -42,10 +39,6 @@ namespace LoginBackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
@@ -83,26 +76,13 @@ namespace LoginBackEnd.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
-        // POST: api/Users
+
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-          if (_context.Users == null)
-          {
-              return Problem("Entity set 'PostgresContext.Users'  is null.");
-          }
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        }
-
         // cerca se la mail inserita già esiste, se si da Bad Request se no crypta la password e lo salva nel db
+        // POST: api/Users/signin
         [AllowAnonymous]
         [HttpPost("signin")]
         public async Task<ActionResult<User>> Signin(User user)
@@ -119,7 +99,7 @@ namespace LoginBackEnd.Controllers
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        // cerca se un user ha la mail inserita, se non c'è riporta che la mail non esista, se c'è controlla che i due elementi abbiamo la stessa 
+        // POST: api/Users/login
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login(User user)
