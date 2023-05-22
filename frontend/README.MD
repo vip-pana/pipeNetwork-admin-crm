@@ -33,3 +33,7 @@ questo lo fai inserendolo proprio come chiave valore così
 "ConnectionStrings": {
     "DefaultConnection": "Host=localhost;Database=postgres;Username=postgres;Password=postgres"
   },
+
+  Prima di tutto dovresti inserire l'utilizzo di questo tipo di connessione dentro al file Startup.cs, ma nelle nuove versioni di ASP.NET il file è unito al file Program.cs per semplificare.
+
+  Di base il context è fatto a parte e fa un ovverride del on configuration del builder. ma per poter mettere la connection string passata direttamente dal file app.settings.json devi portare la configurazione del DBContext nel file program.cs e passare da lì usando il builder il file di configurazione della connection string
