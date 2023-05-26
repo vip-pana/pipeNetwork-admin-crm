@@ -38,6 +38,9 @@ namespace LoginBackEnd
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // allow CORS
+            builder.Services.AddCors(p => p.AddPolicy("corspolicy", build => { build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -48,6 +51,9 @@ namespace LoginBackEnd
             }
 
             app.UseHttpsRedirection();
+
+            // allow CORS
+            app.UseCors("corspolicy");
 
             // allow JWT token
             app.UseAuthentication();

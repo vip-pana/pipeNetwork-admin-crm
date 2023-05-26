@@ -20,6 +20,12 @@ Per il progetto di rewrite, ho scritto il programma utilizzando React con TypeSc
 ## Login
 
 Come primo passo, ho completamente riscritto la pagina di login. Ora è più minimale e facilmente leggibile.
+Gli aggiornamenti sostanziali sono:
+
+- Ho gli state per la mail, pwd e lo show della pwd.
+- Ho un messaggio di errore per l'elemento sbagliato inviato di tipo : 400, 404, 500
+- Ho lo switch dark/white mode, perche' non fa mai male averlo
+- bloccato accesso alle pagine senza token
 
 ## Backend Login
 
@@ -56,12 +62,19 @@ Sia login che signup non richiedono l'utilizzo del jwt token perché sono due ap
 
 Grazie a questo abbiamo le api con una sicurezza maggiore, perché non si possono richiamare senza aver effettuato un login almeno
 
+## CORS policy
+
+dentro al Program.cs abbiamo aggiunto:
+builder.Services.AddCors(p => p.AddPolicy("corspolicy", build => { build.WithOrigins("http://127.0.0.1:5173").AllowAnyMethod().AllowAnyHeader(); }));
+che permette il raggiungimento delle API da questo indirizzo preciso con ogni metodo e con ogni header
+
 ### cose che potrei aggiungere in futuro
 
 - sistemare possibilità di overposting delle POST E PUT dei controllers
 - rendere email uniche nel db (forse non ha senso perché se uno si elimina ma poi si riregistra deve poterlo fare)
 - si può mettere una gestione utilizzando i ruoli ma non è messa di base
 - si possono mettere i token con un expiring, di base non so se ci sono
+- validazione del token
 
 ## NOTE IMPORTANTI segnati questo account per entrare
 

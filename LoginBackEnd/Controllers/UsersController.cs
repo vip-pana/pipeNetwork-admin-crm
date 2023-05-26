@@ -106,7 +106,7 @@ namespace LoginBackEnd.Controllers
         {
             User? result = await _context.Users.FirstOrDefaultAsync(usr => usr.Email == user.Email.ToLower());
 
-            if (result == null) { return BadRequest("Incorrect email"); }
+            if (result == null) { return NotFound("Incorrect email"); }
 
             bool isValidPassword = BCrypt.Net.BCrypt.Verify(user.Password, result.Password);
 
