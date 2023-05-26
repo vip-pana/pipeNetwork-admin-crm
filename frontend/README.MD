@@ -75,6 +75,11 @@ che permette il raggiungimento delle API da questo indirizzo preciso con ogni me
 - si può mettere una gestione utilizzando i ruoli ma non è messa di base
 - si possono mettere i token con un expiring, di base non so se ci sono
 - validazione del token
+- ricerca degli utenti tramite pulsante di ricerca
+
+### fonti
+
+Sidebar : https://www.youtube.com/watch?v=Jp-v9u_qy_o
 
 ## NOTE IMPORTANTI segnati questo account per entrare
 

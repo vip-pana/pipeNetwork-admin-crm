@@ -1,3 +1,10 @@
+import { Base } from "./Base";
+
 export const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <Base />
+      Dashboard
+    </div>
+  );
 };
