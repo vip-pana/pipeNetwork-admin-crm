@@ -7,8 +7,6 @@ C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\LoginBackEnd.
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\LoginBackEnd.pdb
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\BCrypt.Net-Next.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Humanizer.dll
-C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\MessagePack.dll
-C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\MessagePack.Annotations.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.Build.dll
@@ -44,7 +42,6 @@ C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.Ide
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.NET.StringTools.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.OpenApi.dll
-C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.VisualStudio.Debugger.Contracts.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\dotnet-aspnet-codegenerator-design.dll
@@ -274,3 +271,9 @@ C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\obj\Debug\net7.0\LoginBackEnd.
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\obj\Debug\net7.0\ref\LoginBackEnd.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Azure.Core.dll
+C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Azure.Identity.dll
+C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.CodeAnalysis.Elfie.dll
+C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+C:\Develop\git\pipeNetwork-admin-crm\LoginBackEnd\bin\Debug\net7.0\System.Memory.Data.dll

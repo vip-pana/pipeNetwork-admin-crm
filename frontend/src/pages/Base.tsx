@@ -1,8 +1,12 @@
-import { Flex, HStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, IconButton } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/base/sidebar/Sidebar";
+import { MdMenu } from "react-icons/md";
+import { useState } from "react";
 
 export const Base = () => {
+  const [collapse, setCollapse] = useState(false);
+
   return (
     <HStack w={"full"} h={"100vh"} p={2}>
       {/* Sidebar */}
@@ -10,18 +14,36 @@ export const Base = () => {
         as={"aside"}
         w={"full"}
         h={"full"}
-        maxW={250}
-        bg={"dark.100"}
+        maxW={!collapse ? 250 : 57}
         alignItems={"center"}
         p={4}
         flexDirection={"column"}
         justifyContent={"space-between"}
         borderRadius={"3xl"}
-        boxShadow={"dark-lg"}
+        boxShadow={"2xl"}
       >
-        <Sidebar />
+        <Sidebar collapse={collapse} />
       </Flex>
-      <Outlet />
+      {/* Content */}
+      <Box
+        as="main"
+        w="full"
+        h="full"
+        shadow={"2xl"}
+        position="relative"
+        borderRadius="3xl"
+      >
+        <IconButton
+          aria-label="Menu Colapse"
+          icon={<MdMenu />}
+          top={6}
+          left={6}
+          onClick={() => {
+            setCollapse(!collapse);
+          }}
+        />
+        <Outlet />
+      </Box>
     </HStack>
   );
 };

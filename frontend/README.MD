@@ -85,3 +85,10 @@ Sidebar : https://www.youtube.com/watch?v=Jp-v9u_qy_o
 
 email : mariorossi@gmail.com
 pwd : test123!
+
+## SISTEMARE ASAP
+
+email e password non si cancellano dal login al errore di registrazione
+is active per sidebar
+creare le altre root
+sistema sfondo che non si allunga scendendo

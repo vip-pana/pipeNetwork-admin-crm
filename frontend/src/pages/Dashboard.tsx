@@ -1,10 +1,10 @@
-import { Base } from "./Base";
+import { Heading } from "@chakra-ui/react";
 
 export const Dashboard = () => {
   return (
-    <div>
-      <Base />
-      Dashboard
-    </div>
+    <>
+      <Heading pl={100}>Dashboard</Heading>
+      {/* Insert widgets here */}
+    </>
   );
 };

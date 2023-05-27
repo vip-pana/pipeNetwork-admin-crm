@@ -1,20 +1,30 @@
 import { Flex, Link, Text } from "@chakra-ui/react";
 import { NavigateFunction } from "react-router-dom";
 
-// export const Logo = ({ collapse }) => (
-export const Logo = ({ navigate }: { navigate: NavigateFunction }) => (
-  <Flex w="full" alignItems="center" flexDirection="row" gap={4}>
-    <Link
-      display="flex"
+export const Logo = ({
+  navigate,
+  collapse,
+}: {
+  navigate: NavigateFunction;
+  collapse: boolean;
+}) => {
+  return (
+    <Flex
+      w="full"
       alignItems="center"
-      gap={2}
-      fontWeight={"bold"}
-      fontSize={18}
-      _hover={{ textDecoration: "none" }}
-      onClick={() => navigate("/dashboard")}
+      flexDirection={collapse ? "row" : "column"}
     >
-      <Text fontSize={30}>⭐</Text>
-      PipeNetwork
-    </Link>
-  </Flex>
-);
+      <Link
+        display="flex"
+        alignItems="center"
+        fontWeight={"bold"}
+        fontSize={18}
+        _hover={{ textDecoration: "none" }}
+        onClick={() => navigate("/dashboard")}
+      >
+        <Text fontSize={collapse ? 18 : 30}>⭐</Text>
+        {collapse ? <></> : <>PipeNetwork</>}
+      </Link>
+    </Flex>
+  );
+};

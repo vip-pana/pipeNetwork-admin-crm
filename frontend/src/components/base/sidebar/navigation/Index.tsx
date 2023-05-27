@@ -36,12 +36,20 @@ const items = [
   },
 ];
 
-export const Navigation = ({ navigate }: { navigate: NavigateFunction }) => (
-  <List w="full">
-    {items.map((item, index) => (
-      <ListItem key={index}>
-        <NavItem item={item} navigate={navigate} />
-      </ListItem>
-    ))}
-  </List>
-);
+export const Navigation = ({
+  navigate,
+  collapse,
+}: {
+  navigate: NavigateFunction;
+  collapse: boolean;
+}) => {
+  return (
+    <List w="full">
+      {items.map((item, index) => (
+        <ListItem key={index}>
+          <NavItem item={item} navigate={navigate} collapse={collapse} />
+        </ListItem>
+      ))}
+    </List>
+  );
+};
