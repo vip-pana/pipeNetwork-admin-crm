@@ -9,8 +9,10 @@ import {
   Button,
   ModalFooter,
 } from "@chakra-ui/react";
-import cSharpAxios from "../api/cSharpAxios";
+import cSharpAxios from "../features/cSharpAxios";
+import { CONTACT_URL } from "../features/cSharpAxios";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const DeleteModal = ({
   isOpen,
@@ -21,17 +23,22 @@ export const DeleteModal = ({
   onClose: () => void;
   getContacts: () => Promise<void>;
 }) => {
-  const REMOVE_CONTACT = "Contacts/";
   const [loading, setLoading] = useState<boolean>(false);
+  const param = useParams();
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
       setLoading(true);
       await cSharpAxios
-        .delete(REMOVE_CONTACT + localStorage.getItem("id"))
+        .delete(CONTACT_URL + localStorage.getItem("id"))
         .then(() => setLoading(false));
       onClose();
-      getContacts();
+      if (param.id) {
+        navigate(-1);
+      } else {
+        getContacts();
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -47,7 +54,6 @@ export const DeleteModal = ({
         <ModalBody>
           <Text>L'eliminazione è permanente.</Text>
         </ModalBody>
-
         <ModalFooter>
           <Button variant="ghost" mr={3} onClick={onClose}>
             Close

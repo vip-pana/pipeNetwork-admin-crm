@@ -17,6 +17,8 @@ public partial class PostgresContext : DbContext
 
     public virtual DbSet<Contact> Contacts { get; set; }
 
+    public virtual DbSet<Ticket> Tickets { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -68,6 +70,30 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.Surname)
                 .HasColumnType("character varying")
                 .HasColumnName("surname");
+        });
+
+        modelBuilder.Entity<Ticket>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("ticket_pkey");
+
+            entity.ToTable("ticket");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ByContact).HasColumnName("byContact");
+            entity.Property(e => e.Content)
+                .HasColumnType("character varying")
+                .HasColumnName("content");
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Heading)
+                .HasColumnType("character varying")
+                .HasColumnName("heading");
+            entity.Property(e => e.Status)
+                .HasColumnType("character varying")
+                .HasColumnName("status");
+
+            entity.HasOne(d => d.ByContactNavigation).WithMany(p => p.Tickets)
+                .HasForeignKey(d => d.ByContact)
+                .HasConstraintName("byUser_FK");
         });
 
         modelBuilder.Entity<User>(entity =>

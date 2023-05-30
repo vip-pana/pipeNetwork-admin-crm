@@ -1,6 +1,6 @@
 import { Link, Box, Text, Button, useColorMode } from "@chakra-ui/react";
-import { navItem } from "./Index";
-import { NavigateFunction } from "react-router-dom";
+import { navItem } from "../../../../features/Interface";
+import { NavLink, NavigateFunction, useLocation } from "react-router-dom";
 
 export const NavItem = ({
   item,
@@ -13,7 +13,8 @@ export const NavItem = ({
 }) => {
   const { label, icon, path } = item;
   const { colorMode } = useColorMode();
-  const isDark = colorMode === "dark";
+  const location = useLocation();
+  const isDark = colorMode === "dark" ? "white" : "black";
   const navigateToPath = () => {
     if (path === "/") {
       localStorage.removeItem("token");
@@ -37,35 +38,33 @@ export const NavItem = ({
             fontWeight="medium"
             w="full"
             justifyContent={collapse ? "center" : ""}
+            _hover={{ textDecoration: "none", color: isDark }}
             onClick={() => {
               navigateToPath();
             }}
           >
             <Text>{icon}</Text>
-            {!collapse && <Text>{label} </Text>}
           </Link>
         </Button>
       ) : (
-        <Link
-          gap={2}
-          display="flex"
-          alignItems="center"
-          _hover={
-            isDark
-              ? { textDecoration: "none", color: "white" }
-              : { textDecoration: "none", color: "black" }
-          }
-          fontWeight="medium"
-          color={"gray"}
-          w="full"
-          justifyContent={collapse ? "center" : ""}
-          onClick={() => {
-            navigateToPath();
-          }}
-        >
-          <Text>{icon}</Text>
-          {!collapse && <Text>{label}</Text>}
-        </Link>
+        <>
+          <Box
+            gap={2}
+            display="flex"
+            alignItems="center"
+            _hover={{ textDecoration: "none", color: isDark }}
+            fontWeight="medium"
+            color={location.pathname === path ? isDark : "gray"}
+            w="full"
+            justifyContent={collapse ? "center" : ""}
+            onClick={() => {
+              navigateToPath();
+            }}
+          >
+            <Text>{icon}</Text>
+            {!collapse && <NavLink to={path}>{label}</NavLink>}
+          </Box>
+        </>
       )}
     </Box>
   );

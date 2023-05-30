@@ -12,42 +12,47 @@ import {
   Box,
   VStack,
   Button,
-  useColorMode,
+  ColorMode,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import cSharpAxios from "../api/cSharpAxios";
-import { AxiosError } from "axios";
+import { useRef, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import cSharpAxios, { USER_LOGIN_URL } from "../features/cSharpAxios";
+import { AxiosError } from "axios";
 
-export const Login = () => {
-  const LOGIN_URL = "Users/login";
-  const { colorMode, toggleColorMode } = useColorMode();
-  const isDark: boolean = colorMode === "dark";
-
+export const Login = ({
+  colorMode,
+  toggleColorMode,
+}: {
+  colorMode: ColorMode;
+  toggleColorMode: () => void;
+}) => {
   // indica se la pagina sta eseguendo una chiamata API e quindi blocca l'azione di mandare ulteriori richieste
   const [loading, setLoading] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
 
-  // toggle per mostrare o no la password
-  const [show, setShow] = useState<boolean>(false);
-  const handleShowPwd = () => setShow(!show);
-
   // dati email e password vengono salvati in degli state
   const [email, setEmail] = useState<string | undefined>();
+  const refEmail = useRef(null);
+
   const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setErrEmail(false);
+
     setErrPassword(false);
     setErrMessage("");
   };
 
   const [password, setPassword] = useState<string>();
+  const refPassword = useRef(null);
   const handlePwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     setErrEmail(false);
     setErrPassword(false);
     setErrMessage("");
   };
+  // toggle per mostrare o no la password
+  const [show, setShow] = useState<boolean>(false);
+  const handleShowPwd = () => setShow(!show);
 
   // errori visibili all'utente tramite submit del form errato
   const [errEmail, setErrEmail] = useState<boolean>(false);
@@ -61,7 +66,7 @@ export const Login = () => {
     try {
       setLoading(true);
       const token = await cSharpAxios.post(
-        LOGIN_URL,
+        USER_LOGIN_URL,
         JSON.stringify({ email, password }),
         { headers: { "Content-Type": "application/json" } }
       );
@@ -74,11 +79,20 @@ export const Login = () => {
         case 400:
           setErrPassword(true);
           setErrMessage("Wrong password!");
+          if (refPassword.current) {
+            refPassword.current.value = "";
+          }
           setPassword("");
           break;
         case 404:
           setErrEmail(true);
           setErrMessage("Email not found!");
+          if (refEmail.current) {
+            refEmail.current.value = "";
+          }
+          if (refPassword.current) {
+            refPassword.current.value = "";
+          }
           setEmail("");
           setPassword("");
           break;
@@ -95,7 +109,7 @@ export const Login = () => {
   return (
     <Box m={5}>
       <Button mb={5} onClick={toggleColorMode}>
-        {isDark ? "Light" : "Dark"}
+        {colorMode == "dark" ? "Light" : "Dark"}
       </Button>
       <Card maxW={"lg"} margin={"auto"}>
         <CardHeader>
@@ -112,6 +126,7 @@ export const Login = () => {
               <FormControl>
                 <FormLabel>Email</FormLabel>
                 <Input
+                  ref={refEmail}
                   isInvalid={errEmail}
                   defaultValue={email}
                   placeholder="Email"
@@ -124,6 +139,7 @@ export const Login = () => {
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
+                    ref={refPassword}
                     isInvalid={errPassword}
                     defaultValue={password}
                     placeholder="Password"

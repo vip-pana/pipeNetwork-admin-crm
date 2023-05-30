@@ -1,40 +1,7 @@
 import { List, ListItem } from "@chakra-ui/react";
 import { NavItem } from "./NavItem";
 import { NavigateFunction } from "react-router-dom";
-
-export interface navItem {
-  label: string;
-  icon: string;
-  path: string;
-}
-
-const items = [
-  {
-    label: "Dashboard",
-    icon: "🧑‍💻",
-    path: "/dashboard",
-  },
-  {
-    label: "Contacts",
-    icon: "👥",
-    path: "/contacts",
-  },
-  {
-    label: "Leads",
-    icon: "🧑🏻",
-    path: "/leads",
-  },
-  {
-    label: "Settings",
-    icon: "⚙️",
-    path: "/settings",
-  },
-  {
-    label: "Logout",
-    icon: "🚪",
-    path: "/",
-  },
-];
+import { items } from "../../../../features/navItems";
 
 export const Navigation = ({
   navigate,

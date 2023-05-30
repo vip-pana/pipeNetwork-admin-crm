@@ -20,7 +20,7 @@ namespace LoginBackEnd.Controllers
             _context = context;
         }
 
-        // GET: api/Contacts
+        // GET: api/Contacts3
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contact>>> GetContacts()
         {
@@ -29,6 +29,40 @@ namespace LoginBackEnd.Controllers
               return NotFound();
           }
             return await _context.Contacts.ToListAsync();
+        }
+
+        // GET: api/Contacts/filter
+        [HttpGet("filter/{filter}")]
+        public async Task<ActionResult<IEnumerable<Contact>>> GetOrderByContacts(string filter)
+        {
+            if (_context.Contacts == null)
+            {
+                return NotFound();
+            }
+
+            IQueryable<Contact> query = _context.Contacts;
+
+            switch (filter)
+            {
+                case "name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "surname":
+                    query = query.OrderBy(x => x.Surname);
+                    break;
+                case "email":
+                    query = query.OrderBy(x => x.Email);
+                    break;
+                case "status":
+                    query = query.OrderBy(x => x.Status);
+                    break;
+                // Aggiungi altri casi per altri campi di ordinamento se necessario
+                default:
+                    // Campo di ordinamento non valido, restituisci un errore o un messaggio di avviso
+                    return BadRequest("Campo di ordinamento non valido.");
+            }
+
+            return await query.ToListAsync(); 
         }
 
         // GET: api/Contacts/5

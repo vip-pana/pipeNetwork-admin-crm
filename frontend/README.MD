@@ -88,7 +88,10 @@ pwd : test123!
 
 ## SISTEMARE ASAP
 
-email e password non si cancellano dal login al errore di registrazione
-is active per sidebar
-creare le altre root
-sistema sfondo che non si allunga scendendo
+sistema sfondo che non si allunga scendendo // problemi nel riuscirci
+riduzione della sidebar con transizione
+cambia i button della sidebar da link a onclick navigate
+mettere loading in un file condiviso
+problemi con il settaggio delle select nella put
+finire ticket response
+problemi con property value per il login

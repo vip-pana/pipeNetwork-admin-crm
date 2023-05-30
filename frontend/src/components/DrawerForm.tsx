@@ -13,9 +13,11 @@ import {
   Button,
   Stack,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import cSharpAxios from "../api/cSharpAxios";
-export const AddDrawer = ({
+import { useEffect, useState } from "react";
+import cSharpAxios, { CONTACT_URL } from "../features/cSharpAxios";
+import { useParams } from "react-router-dom";
+import { contact } from "../features/Interface";
+export const DrawerForm = ({
   isOpen,
   onClose,
   getContacts,
@@ -25,8 +27,29 @@ export const AddDrawer = ({
   onClose: () => void;
   getContacts: () => Promise<void>;
 }) => {
-  const ADD_CONTACT = "Contacts";
+  const param = useParams();
+
+  const getContact = async () => {
+    try {
+      setLoading(true);
+      await cSharpAxios.get(CONTACT_URL + param.id).then((result) => {
+        setContact(result.data);
+        setName(result.data.name);
+        setSurname(result.data.surname);
+        setEmail(result.data.email);
+        setStatus(result.data.status);
+        setLoading(false);
+        setMethod("put");
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
   const [loading, setLoading] = useState<boolean>(false);
+  const [contact, setContact] = useState<contact>();
+  const [method, setMethod] = useState<string>("post");
 
   const [name, setName] = useState<string>();
   const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,20 +69,48 @@ export const AddDrawer = ({
   };
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      await cSharpAxios
-        .post(ADD_CONTACT, JSON.stringify({ name, email, surname, status }), {
-          headers: { "Content-Type": "application/json" },
-        })
-        .then(() => setLoading(false));
-      onClose();
-      getContacts();
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
+    if (method === "post") {
+      try {
+        setLoading(true);
+        await cSharpAxios
+          .post(CONTACT_URL, JSON.stringify({ name, email, surname, status }), {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then(() => setLoading(false));
+        onClose();
+        getContacts();
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    } else {
+      try {
+        setLoading(true);
+        await cSharpAxios
+          .put(
+            CONTACT_URL + param.id,
+            JSON.stringify({ id: param.id, name, email, surname, status }),
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          )
+          .then(() => setLoading(false));
+        onClose();
+        getContacts();
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     }
   };
+
+  useEffect(() => {
+    if (param.id) {
+      getContact();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />
@@ -77,6 +128,7 @@ export const AddDrawer = ({
                 id="name"
                 onChange={handleNameInput}
                 placeholder="Please enter user name"
+                defaultValue={contact?.name}
               />
             </Box>
             <Box>
@@ -85,6 +137,7 @@ export const AddDrawer = ({
                 id="surname"
                 onChange={handleSurnameInput}
                 placeholder="Please enter user surname"
+                defaultValue={contact?.surname}
               />
             </Box>
 
@@ -95,6 +148,7 @@ export const AddDrawer = ({
                 onChange={handleEmailInput}
                 id="email"
                 placeholder="Please enter email"
+                defaultValue={contact?.email}
               />
             </Box>
 
@@ -103,7 +157,7 @@ export const AddDrawer = ({
               <Select
                 id="owner"
                 onChange={handleStatusInput}
-                defaultValue="active"
+                defaultValue={contact?.status}
               >
                 <option value="active">Active</option>
                 <option value="expired">Expired</option>

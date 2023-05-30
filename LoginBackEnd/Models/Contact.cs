@@ -14,4 +14,6 @@ public partial class Contact
     public string? Status { get; set; }
 
     public long Id { get; set; }
+
+    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

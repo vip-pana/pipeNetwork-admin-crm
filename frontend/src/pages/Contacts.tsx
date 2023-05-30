@@ -1,54 +1,72 @@
 import {
-  Badge,
   Card,
-  CardBody,
   CardHeader,
+  CardBody,
   Heading,
   Table,
   TableContainer,
   Tbody,
   Td,
   Th,
-  Thead,
   Tr,
+  Thead,
   IconButton,
   Stack,
-  SkeletonText,
-  Spacer,
   HStack,
+  SkeletonText,
+  Text,
+  Spacer,
   useDisclosure,
+  Badge,
+  Select,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { FaTrashAlt, FaSearch, FaPlus } from "react-icons/fa";
 import { MdRefresh } from "react-icons/md";
 import { useState, useEffect } from "react";
-import cSharpAxios from "../api/cSharpAxios";
-import { AddDrawer } from "../components/AddDrawer";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import cSharpAxios, { CONTACT_URL } from "../features/cSharpAxios";
+import { contact } from "../features/Interface";
+import { DrawerForm } from "../components/DrawerForm";
 import { DeleteModal } from "../components/DeleteModal";
 
-interface contacts {
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  status: string;
-}
-
 export const Contacts = () => {
+  // per aprire modal e drawer
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const CONTACTS_URL = "Contacts";
-
-  const [contacts, setContacts] = useState<contacts[]>();
-  const [loading, setLoading] = useState<boolean>(false);
   const [selectedModal, setSelectedModal] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // per entrare nella pagina detail
+  const navigate: NavigateFunction = useNavigate();
+
+  const [contacts, setContacts] = useState<contact[]>();
 
   const getContacts = async () => {
     try {
       setLoading(true);
-      await cSharpAxios.get(CONTACTS_URL).then((result) => {
+      await cSharpAxios.get(CONTACT_URL).then((result) => {
         setContacts(result.data);
         setLoading(false);
       });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+  const orderByContacts = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    try {
+      setLoading(true);
+      if (e.currentTarget.value != "") {
+        await cSharpAxios
+          .get(CONTACT_URL + "filter/" + e.currentTarget.value)
+          .then((result) => {
+            setContacts(result.data);
+            setLoading(false);
+          });
+      } else {
+        getContacts();
+      }
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -65,7 +83,7 @@ export const Contacts = () => {
     onOpen();
   };
 
-  const openAddDrawer = () => {
+  const openDrawerFor = () => {
     setSelectedModal("drawer");
     onOpen();
   };
@@ -78,6 +96,14 @@ export const Contacts = () => {
           <HStack>
             <Heading size="md">Contact book</Heading>
             <Spacer />
+            <Text as={"b"}>Order by:</Text>
+            <Select onChange={orderByContacts} maxW={150}>
+              <option value="">---</option>
+              <option value="name">name</option>
+              <option value="surname">surname</option>
+              <option value="email">email</option>
+              <option value="status">status</option>
+            </Select>
             <IconButton
               shadow={"md"}
               rounded={"3xl"}
@@ -89,8 +115,8 @@ export const Contacts = () => {
               shadow={"md"}
               rounded={"3xl"}
               icon={<FaPlus />}
+              onClick={() => openDrawerFor()}
               aria-label={"add"}
-              onClick={() => openAddDrawer()}
             />
           </HStack>
         </CardHeader>
@@ -107,7 +133,7 @@ export const Contacts = () => {
             </Stack>
           ) : (
             <TableContainer>
-              <Table variant="striped" colorScheme="blackAlpha" size={"lg"}>
+              <Table variant="striped" colorScheme="blackAlpha">
                 <Thead>
                   <Tr>
                     <Th>Name</Th>
@@ -134,22 +160,22 @@ export const Contacts = () => {
                         </Badge>
                       </Td>
                       <Td>
-                        <IconButton
-                          marginRight={1}
-                          shadow={"md"}
-                          size={"xs"}
-                          borderRadius={"3xl"}
-                          icon={<FaTrashAlt />}
-                          aria-label={"remove"}
-                          onClick={() => openDeleteModal(contact.id)}
-                        />
-                        <IconButton
-                          shadow={"md"}
-                          size={"xs"}
-                          rounded={"3xl"}
-                          icon={<FaSearch />}
-                          aria-label={"detail"}
-                        />
+                        <ButtonGroup size={"xs"}>
+                          <IconButton
+                            shadow={"md"}
+                            borderRadius={"3xl"}
+                            icon={<FaTrashAlt />}
+                            aria-label={"remove"}
+                            onClick={() => openDeleteModal(contact.id)}
+                          />
+                          <IconButton
+                            shadow={"md"}
+                            borderRadius={"3xl"}
+                            icon={<FaSearch />}
+                            aria-label={"detail"}
+                            onClick={() => navigate(`${contact.id}`)}
+                          />
+                        </ButtonGroup>
                       </Td>
                     </Tr>
                   ))}
@@ -168,7 +194,7 @@ export const Contacts = () => {
           <></>
         )}
         {selectedModal == "drawer" ? (
-          <AddDrawer
+          <DrawerForm
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
